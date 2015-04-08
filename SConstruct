@@ -870,9 +870,9 @@ if nix:
     if darwin:
         env.Append( LINKFLAGS=["-Wl,-bind_at_load"] )
         env.Append( SHLINKFLAGS=["-Wl,-bind_at_load"] )
-    else:
-        env.Append( LINKFLAGS=["-Wl,-z,now"] )
-        env.Append( SHLINKFLAGS=["-Wl,-z,now"] )
+    #else:
+        #env.Append( LINKFLAGS=["-Wl,-z,now"] )
+        #env.Append( SHLINKFLAGS=["-Wl,-z,now"] )
 
     if not darwin:
         env.Append( LINKFLAGS=["-rdynamic"] )

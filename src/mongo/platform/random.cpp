@@ -155,7 +155,38 @@ namespace mongo {
 
 #else
 
-#error Must implement SecureRandom for platform
+//#error Must implement SecureRandom for platform
+    class InputStreamSecureRandom : public SecureRandom {
+    public:
+        InputStreamSecureRandom( const char* fn ) {
+            _in = new std::ifstream( fn, std::ios::binary | std::ios::in );
+            if ( !_in->is_open() ) {
+                std::cerr << "can't open " << fn << " " << strerror(errno) << std::endl;
+                abort();
+            }
+        }
+
+        ~InputStreamSecureRandom() {
+            delete _in;
+        }
+
+        int64_t nextInt64() {
+            int64_t r;
+            _in->read( reinterpret_cast<char*>( &r ), sizeof(r) );
+            if ( _in->fail() ) {
+                abort();
+            }
+            return r;
+        }
+
+    private:
+        std::ifstream* _in;
+    };
+
+    SecureRandom* SecureRandom::create() {
+        return new InputStreamSecureRandom( "/dev/urandom" );
+    }
+
 
 #endif
 
