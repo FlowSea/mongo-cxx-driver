@@ -414,7 +414,7 @@ if releaseBuild and (debugBuild or not optBuild):
     print("Error: A --release build may not have debugging, and must have optimization")
     Exit(1)
 
-mongoclientVersion = "1.0.1-rc0-pre"
+mongoclientVersion = "1.0.1-rc1-pre"
 # We don't keep the -pre in the user testable version identifiers, because
 # nobody should be conditioning on the pre-release status.
 mongoclientVersionComponents = re.split(r'\.|-rc', mongoclientVersion.partition('-pre')[0])
@@ -1837,7 +1837,6 @@ Export("darwin windows solaris linux freebsd nix")
 Export("debugBuild optBuild")
 Export("use_clang")
 
-env.SConscript('src/SConscript.client', variant_dir='$VARIANT_DIR', duplicate=False)
 env.SConscript('src/SConscript', variant_dir='$VARIANT_DIR', duplicate=False)
 
 # --- Coverage ---
