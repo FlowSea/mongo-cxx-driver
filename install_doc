@@ -1,0 +1,13 @@
+安装所需要的组件:
+1. boost
+2. python
+3. scons
+4. curl: libcurl-devel
+
+为了在cygwin下编译通过, 还需要修改两个文件:
+1. SConstruct: 
+   将里面的-Wl,z,now的编译选项去掉, 因cygwin下的ld不支持-z
+2. src/mongo/platform/random.cpp
+   因程序无法判断cygwin的系统, 所以默认使用linux的实现方式
+
+有问题时, 可以查看build/scons/config.log文件, 来定位实际问题
